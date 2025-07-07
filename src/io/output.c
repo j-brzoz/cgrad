@@ -24,7 +24,7 @@ output_p read_output(FILE *f) {
 	}
 	
 	double tmp;
-	for(int i = 0; i < out->num; i++) {
+	for(size_t i = 0; i < out->num; i++) {
 		if( fscanf( f, "%lf", &(tmp) ) != 1 ) {
 			fprintf(stderr, "Failed to get output data");
 			free(out->data);

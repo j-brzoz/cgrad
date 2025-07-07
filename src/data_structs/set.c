@@ -36,7 +36,7 @@ size_t add_2_set(set_p s, size_t val) {
 
 // check if element is already in the set
 size_t check_if_in_set(set_p s, size_t val) {
-	for(int i = 0; i < s->num_of_elements; i++) {
+	for(size_t i = 0; i < s->num_of_elements; i++) {
 		if(s->elements[i] == val) {
 			return 1;
 		}
@@ -52,7 +52,7 @@ void increase_set(set_p s) {
         	fprintf(stderr, "Failed to allocate memory for increased set.");
         	exit(EXIT_FAILURE);
     	}
-	for(int i = 0; i < s->num_of_elements; i++) {
+	for(size_t i = 0; i < s->num_of_elements; i++) {
 		new_set[i] = s->elements[i];
 	}
 	free(s->elements);

@@ -38,7 +38,7 @@ void increase_val_array(val_array_p a) {
         	fprintf(stderr, "Failed to allocate memory for increased val_array");
         	exit(EXIT_FAILURE);
     	}
-	for(int i = 0; i < a->num_of_elements; i++) {
+	for(size_t i = 0; i < a->num_of_elements; i++) {
 		new_array[i] = a->elements[i];
 	}
 
@@ -50,7 +50,7 @@ void increase_val_array(val_array_p a) {
 void free_val_array(val_array_p a) {
 	if(a != NULL) {
 		if(a->elements != NULL) {
-			for(int i = 0; i < a->num_of_elements; i++) {
+			for(size_t i = 0; i < a->num_of_elements; i++) {
 				free_value(a->elements[i]);
 			}
 			free(a->elements);

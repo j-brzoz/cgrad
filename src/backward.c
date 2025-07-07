@@ -13,7 +13,7 @@ void reverse_topological_sort(value_p node, set_p visited, set_p rev_topo_ord) {
 	if(node != NULL && check_if_in_set(visited, node->id) == 0) {
 		add_2_set(visited, node->id);
 		if(node->children != NULL) {
-			for(int i = 0; i < node->children->num_of_elements; i++) {
+			for(size_t i = 0; i < node->children->num_of_elements; i++) {
 				if(global_array->elements[node->children->elements[i]] != NULL){
 					reverse_topological_sort(global_array->elements[node->children->elements[i]], visited, rev_topo_ord);
 				}

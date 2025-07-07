@@ -12,7 +12,7 @@ neuron_p make_neuron(size_t num_of_inputs) {
 		exit(EXIT_FAILURE);
 	}
 
-	for(int i = 0; i < num_of_inputs+1; i++) {
+	for(size_t i = 0; i < num_of_inputs+1; i++) {
 		random = ((double)rand() / RAND_MAX) * 2.0 - 1.0; // num between -1.0 and 1.0
 		parameters[i] = make_value(random, 0.0, NULL, NULL); 
 	}
@@ -31,7 +31,7 @@ neuron_p make_neuron(size_t num_of_inputs) {
 // call a neuron (inputs are doubles)
 value_p call_double_neuron(neuron_p n, double* inputs) {
 	value_p out = make_value(0.0, 0.0, NULL, NULL);
-	for(int i = 0; i < n->num_of_inputs; i++) {
+	for(size_t i = 0; i < n->num_of_inputs; i++) {
 		value_p input = make_value(inputs[i], 0.0, NULL, NULL);
 		value_p mul = mul_value(n->parameters[i], input);
 		out = add_value(out, mul);
@@ -44,7 +44,7 @@ value_p call_double_neuron(neuron_p n, double* inputs) {
 // call a neuron (inputs are value_ps)
 value_p call_value_neuron(neuron_p n, value_p* inputs) {
 	value_p out = make_value(0.0, 0.0, NULL, NULL);
-	for(int i = 0; i < n->num_of_inputs; i++) {
+	for(size_t i = 0; i < n->num_of_inputs; i++) {
 		value_p mul = mul_value(n->parameters[i], inputs[i]);
 		out = add_value(out, mul);
 	}

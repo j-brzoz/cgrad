@@ -18,7 +18,7 @@ layer_p make_layer(size_t num_of_inputs, size_t num_of_neurons) {
 		fprintf(stderr, "Failed to allocate memory for neurons in a layer.");
                 exit(EXIT_FAILURE);
 	}
-	for(int i = 0; i < num_of_neurons; i++) {
+	for(size_t i = 0; i < num_of_neurons; i++) {
 		out->neurons[i] = make_neuron(num_of_inputs);
 	}
 	return out;
@@ -31,7 +31,7 @@ value_p* call_first_layer(layer_p l, double* inputs) {
                 fprintf(stderr, "Failed to allocate memory for output from the first layer.");
                 exit(EXIT_FAILURE);
         }
-	for(int i = 0; i < l->num_of_neurons; i++) {
+	for(size_t i = 0; i < l->num_of_neurons; i++) {
 		out[i] = call_double_neuron(l->neurons[i], inputs);
 	}
 	return out;
@@ -44,7 +44,7 @@ value_p* call_next_layer(layer_p l, value_p* inputs) {
                 fprintf(stderr, "Failed to allocate memory for output from next layers.");
                 exit(EXIT_FAILURE);
         }
-	for(int i = 0; i < l->num_of_neurons; i++) {
+	for(size_t i = 0; i < l->num_of_neurons; i++) {
 		out[i] = call_value_neuron(l->neurons[i], inputs);
 	}
 	if(inputs != NULL) {
@@ -57,7 +57,7 @@ value_p* call_next_layer(layer_p l, value_p* inputs) {
 void free_layer(layer_p l) {
 	if(l != NULL ) {
 		if(l->neurons != NULL) {	
-			for(int i = 0; i < l->num_of_neurons; i++) {
+			for(size_t i = 0; i < l->num_of_neurons; i++) {
 				if(l->neurons[i] != NULL) {
 					free_neuron(l->neurons[i]);
 				}

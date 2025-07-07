@@ -24,7 +24,7 @@ mlp_p make_mlp(size_t num_of_layers, size_t num_of_inputs, size_t *neurons_per_l
                 exit(EXIT_FAILURE);
         }
 	
-	for(int i = 0; i < num_of_layers; i++) {
+	for(size_t i = 0; i < num_of_layers; i++) {
 		if(i == 0) {
 			m->layers[i] = make_layer(num_of_inputs, neurons_per_layer[0]);
 		} else {
@@ -36,8 +36,8 @@ mlp_p make_mlp(size_t num_of_layers, size_t num_of_inputs, size_t *neurons_per_l
 
 // call the mlp
 value_p* call_mlp(mlp_p m, double* inputs) {
-	value_p* next_inputs;
-	for(int i = 0; i < m->num_of_layers; i++) {
+	value_p* next_inputs = NULL;
+	for(size_t i = 0; i < m->num_of_layers; i++) {
 		if(i == 0) {
 			next_inputs = call_first_layer(m->layers[i], inputs);
 		} else {
@@ -57,9 +57,9 @@ void train_mlp(mlp_p m, size_t iterations, input_p input, output_p output, doubl
 	value_p* tmp;
 	value_p loss;
 	
-	for(int a = 0; a < iterations; a++) {	
+	for(size_t a = 0; a < iterations; a++) {	
 		// forward pass
-		for(int i = 0; i < output->num; i++) {
+		for(size_t i = 0; i < output->num; i++) {
 			tmp = call_mlp(m, input->data[i]);
 			out_pred[i] = tmp[0];
 			free(tmp);
@@ -68,9 +68,9 @@ void train_mlp(mlp_p m, size_t iterations, input_p input, output_p output, doubl
 		loss = mean_sqr_error(out_pred, output->data, output->num);
 	
 		// backward
-		for(int i = 0; i < m->num_of_layers; i++) {
-			for(int j = 0; j < m->layers[i]->num_of_neurons; j++) {
-				for(int k = 0; k < m->layers[i]->neurons[j]->num_of_inputs+1; k++) {
+		for(size_t i = 0; i < m->num_of_layers; i++) {
+			for(size_t j = 0; j < m->layers[i]->num_of_neurons; j++) {
+				for(size_t k = 0; k < m->layers[i]->neurons[j]->num_of_inputs+1; k++) {
 					m->layers[i]->neurons[j]->parameters[k]->gradient = 0.0;
 				}
 			}
@@ -78,16 +78,16 @@ void train_mlp(mlp_p m, size_t iterations, input_p input, output_p output, doubl
 		backward(loss);
 
 		// update
-		for(int i = 0; i < m->num_of_layers; i++) {
-			for(int j = 0; j < m->layers[i]->num_of_neurons; j++) {
-				for(int k = 0; k < m->layers[i]->neurons[j]->num_of_inputs+1; k++) {
+		for(size_t i = 0; i < m->num_of_layers; i++) {
+			for(size_t j = 0; j < m->layers[i]->num_of_neurons; j++) {
+				for(size_t k = 0; k < m->layers[i]->neurons[j]->num_of_inputs+1; k++) {
 					m->layers[i]->neurons[j]->parameters[k]->data += -learning_rate * m->layers[i]->neurons[j]->parameters[k]->gradient;
 				}
 			}
 		}
 		
 		if(is_verbose != 0) {
-			printf("Iteration: %d Loss: ", a+1);
+			printf("Iteration: %ld Loss: ", a+1);
 			print_value(loss);
 		}
 
@@ -103,7 +103,7 @@ void free_mlp(mlp_p m) {
 			free(m->neurons_per_layer);
 		}
 		if(m->layers != NULL) {
-			for(int i = 0; i < m->num_of_layers; i++) {
+			for(size_t i = 0; i < m->num_of_layers; i++) {
 				if(m->layers[i] != NULL) {
 					free_layer(m->layers[i]);
 				}
