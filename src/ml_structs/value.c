@@ -1,5 +1,5 @@
 #include "value.h"
-#include "array.h"
+#include "../data_structs/array.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

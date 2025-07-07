@@ -1,4 +1,4 @@
-#include "./data_structs/value.h"
+#include "./ml_structs/value.h"
 #include <stdio.h>
 
 // loss function: mean square error

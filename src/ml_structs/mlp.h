@@ -2,8 +2,8 @@
 #define MLP_H
 
 #include "layer.h"
-#include "input.h"
-#include "output.h"
+#include "../io/input.h"
+#include "../io/output.h"
 #include "value.h"
 #include <stdio.h>
 

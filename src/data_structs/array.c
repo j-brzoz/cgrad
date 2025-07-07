@@ -1,5 +1,5 @@
 #include "array.h"
-#include "value.h"
+#include "../ml_structs/value.h"
 #include <stdio.h>
 #include <stdlib.h>
 

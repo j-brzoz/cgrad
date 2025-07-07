@@ -2,7 +2,7 @@
 #define BACKWARD_H
 
 #include "./data_structs/set.h"
-#include "./data_structs/value.h"
+#include "./ml_structs/value.h"
 #include <stdio.h>
 
 // sorts all values in reverse topological order for backward pass

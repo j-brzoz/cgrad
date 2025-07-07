@@ -1,7 +1,7 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
-#include "value.h"
+#include "../ml_structs/value.h"
 #include <stdio.h>
 
 typedef struct val_array {

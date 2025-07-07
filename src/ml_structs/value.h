@@ -1,7 +1,7 @@
 #ifndef VALUE_H
 #define VALUE_H
 
-#include "set.h"
+#include "../data_structs/set.h"
 #include <stdio.h>
 
 typedef struct value {

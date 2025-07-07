@@ -1,7 +1,7 @@
 #include "mlp.h"
 #include "layer.h"
 #include "value.h"
-#include "input.h"
+#include "../io/input.h"
 #include "../loss.h"
 #include "../backward.h"
 #include <stdio.h>

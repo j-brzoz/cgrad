@@ -1,7 +1,7 @@
 #ifndef NEURON_H
 #define NEURON_H
 
-#include "../data_structs/value.h"
+#include "value.h"
 #include <stdio.h>
 
 typedef struct neuron {
