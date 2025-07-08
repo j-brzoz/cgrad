@@ -1,8 +1,10 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
-#include "../ml_structs/value.h"
 #include <stdio.h>
+
+struct value;
+typedef struct value* value_p;
 
 typedef struct val_array {
 	value_p* elements;      // elements in array

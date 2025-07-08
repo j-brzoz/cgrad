@@ -7,17 +7,17 @@
 val_array_p make_val_array() {
 	val_array_p a = malloc(sizeof(*a));
 	if (a == NULL) {
-        	fprintf(stderr, "Failed to allocate memory for val_array");
-        	exit(EXIT_FAILURE);
-    	}
+        fprintf(stderr, "Failed to initialize global value array.\n");
+        return NULL;
+    }
 	a->size = 2;
 	a->num_of_elements = 0;
 	a->elements = malloc(sizeof(value_p) * a->size);
 	if (a->elements == NULL) {
-        	fprintf(stderr, "Failed to allocate memory for val_array elements");
-        	free(a);  
-		exit(EXIT_FAILURE);
-    	}
+		fprintf(stderr, "Failed to allocate memory for global value array elements.\n");
+		free(a);  
+		return NULL;
+    }
 	return a;
 }
 

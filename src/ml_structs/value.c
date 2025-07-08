@@ -5,35 +5,66 @@
 #include <string.h>
 #include <math.h>
 
-extern size_t* id;
-extern val_array_p global_array;
+size_t* id = NULL;
+val_array_p global_array = NULL;
+
+int value_system_init() {
+    if (id != NULL || global_array != NULL) {
+        fprintf(stderr, "Value system already initialized.\n");
+        return 0;
+    }
+
+    id = malloc(sizeof(size_t));
+    if (id == NULL) {
+        fprintf(stderr, "Failed to allocate memory for global ID counter.\n");
+        return -1;
+    }
+    *id = 0;
+
+    global_array = make_val_array();
+    if (global_array == NULL) {
+        free(id);
+        id = NULL;
+        return -1;
+    }
+    return 0;
+}
+
+void value_system_cleanup() {
+    if (id != NULL) {
+        free(id);
+        id = NULL;
+    }
+    if (global_array != NULL) {
+        free_val_array(global_array);
+        global_array = NULL;
+    }
+}
 
 // make a value
 value_p make_value(double data, double gradient, char* operation, set_p children) {
-	if(global_array == NULL) {
-		global_array = make_val_array();
-	}
-	if(id == NULL) {
-		id = malloc(sizeof(size_t));
-		if(id == NULL) {
-			fprintf(stderr, "Failed to allocate memory for id.");
-			exit(EXIT_FAILURE);
-		}
-		*id = 0;
-	}
-	else {
-		*id += 1;	
-	}
-
+    if (id == NULL || global_array == NULL) {
+        fprintf(stderr, "Error: Value system not initialized. Call value_system_init() first.\n");
+        return NULL;
+    }
 	value_p out = malloc(sizeof(*out));
 	if(out == NULL) {
-        	fprintf(stderr, "Failed to allocate memory for value.");
-                exit(EXIT_FAILURE);
-        }
+        fprintf(stderr, "Failed to allocate memory for value_t object.\n");
+        return NULL;
+    }
+
 	out->id = *id;
+    *id += 1;
+
 	out->data = data;
 	out->gradient = gradient;
-	out->operation = operation;	
+
+	out->operation = (operation != NULL) ? strdup(operation) : NULL;
+	if (operation != NULL && out->operation == NULL) {
+        fprintf(stderr, "Failed to duplicate operation string.\n");
+        free(out);
+        return NULL;
+    }
 	out->children = children;
 	add_2_val_array(global_array, out);
 	return out;

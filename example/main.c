@@ -11,11 +11,11 @@
 #include <stdlib.h>
 #include <time.h>
 
-size_t* id = NULL;
-val_array_p global_array = NULL;
 
 int main() {
 	srand(time(NULL));
+
+	value_system_init();
 
 	// mlp structure	
 	size_t* n = malloc(sizeof(size_t) * 3);
@@ -41,7 +41,6 @@ int main() {
 	free_input(in);
 	free_output(out);
 	free_mlp(m);
-	free_val_array(global_array);
-	free(id);
+	value_system_cleanup();
 	return 0;
 }

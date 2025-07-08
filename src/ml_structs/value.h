@@ -2,6 +2,7 @@
 #define VALUE_H
 
 #include "../data_structs/set.h"
+#include "../data_structs/array.h"
 #include <stdio.h>
 
 typedef struct value {
@@ -12,6 +13,13 @@ typedef struct value {
 	char* operation;  // which operation made that value; if new value, operation is null
 } value_t, *value_p;
 
+extern size_t* id;
+extern val_array_p global_array;
+
+// initializes the global value system
+int value_system_init();
+// clean up the global value system
+void value_system_cleanup();
 // make a value
 value_p make_value(double data, double gradient, char* operation, set_p children);
 // print value's data
