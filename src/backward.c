@@ -81,8 +81,8 @@ void backward_exp(const value_p val) {
 
 // backward pass through all children
 void backward(value_p val) {
-	set_p visited = make_set_p();
-	set_p rev_topo_ord = make_set_p();
+	set_p visited = make_set_p(2, NULL);
+	set_p rev_topo_ord = make_set_p(2, NULL);
 	reverse_topological_sort(val, visited, rev_topo_ord);
 	val->gradient = 1.0;
 	for(int i = rev_topo_ord->num_of_elements - 1; i >= 0;  i--) {		

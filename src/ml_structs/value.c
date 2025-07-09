@@ -77,50 +77,23 @@ void print_value(const value_p val) {
 
 // add two values
 value_p add_value(const value_p val1, const value_p val2) {
-	char* operation = malloc(sizeof(*operation) * 4);
-	if(operation == NULL) {
-                fprintf(stderr, "Failed to allocate memory for value's operation.");
-                exit(EXIT_FAILURE);
-        }
-	strcpy(operation, "sum");	
-	set_p children = make_set_p();
-	add_2_set(children, val1->id);
-	add_2_set(children, val2->id);
-	value_p out = make_value(val1->data + val2->data, 0.0, operation, children);
-	free(operation);
+	set_p children = make_set_p(2, (const size_t[]){val1->id, val2->id});
+	value_p out = make_value(val1->data + val2->data, 0.0, "sum", children);
 	return out;
 }
 
 // multiply two values
 value_p mul_value(const value_p val1, const value_p val2) {
-	char* operation = malloc(sizeof(*operation) * 4);
-	if(operation == NULL) {
-                fprintf(stderr, "Failed to allocate memory for value's operation.");
-                exit(EXIT_FAILURE);
-        }
-	strcpy(operation, "mul");	
-	set_p children = make_set_p();
-	add_2_set(children, val1->id);
-	add_2_set(children, val2->id);
-	value_p out = make_value(val1->data * val2->data, 0.0, operation, children);
-	free(operation);
+	set_p children = make_set_p(2, (const size_t[]){val1->id, val2->id});
+	value_p out = make_value(val1->data * val2->data, 0.0, "mul", children);
 	return out;
 }
 
 // raise value to the power
 value_p pow_value(const value_p val, double power) { // only supports float powers
-	char* operation = malloc(sizeof(*operation) * 4);
-	if(operation == NULL) {
-                fprintf(stderr, "Failed to allocate memory for value's operation.");
-                exit(EXIT_FAILURE);
-        }
-	strcpy(operation, "pow");	
-	set_p children = make_set_p();
 	value_p power_val = make_value(power, 0.0, NULL, NULL); 
-	add_2_set(children, val->id);
-	add_2_set(children, power_val->id);
-	value_p out = make_value(pow(val->data, power), 0.0, operation, children);
-	free(operation);
+	set_p children = make_set_p(2, (const size_t[]){val->id, power_val->id});
+	value_p out = make_value(pow(val->data, power), 0.0, "pow", children);
 	return out;
 }
 
@@ -142,31 +115,15 @@ value_p sub_value(const value_p val1, const value_p val2) {
 
 // perform tanh(value)
 value_p tanh_value(const value_p val) {
-	char* operation = malloc(sizeof(*operation) * 4);
-	if(operation == NULL) {
-                fprintf(stderr, "Failed to allocate memory for value's operation.");
-                exit(EXIT_FAILURE);
-        }
-	strcpy(operation, "tnh");
-	set_p children = make_set_p();
-	add_2_set(children, val->id);
-	value_p out = make_value((exp(2 * val->data) - 1) / (exp(2 * val->data) + 1), 0.0, operation, children);
-	free(operation);
+	set_p children = make_set_p(1, (const size_t[]){val->id});
+	value_p out = make_value((exp(2 * val->data) - 1) / (exp(2 * val->data) + 1), 0.0, "tnh", children);
 	return out;
 }
 
 // perform e**value
 value_p exp_value(const value_p val) {
-	char* operation = malloc(sizeof(*operation) * 4);
-	if(operation == NULL) {
-                fprintf(stderr, "Failed to allocate memory for value's operation.");
-                exit(EXIT_FAILURE);
-        }
-	strcpy(operation, "exp");
-	set_p children = make_set_p();
-	add_2_set(children, val->id);
-	value_p out = make_value((exp(val->data)), 0.0, operation, children);
-	free(operation);
+	set_p children = make_set_p(1, (const size_t[]){val->id});
+	value_p out = make_value((exp(val->data)), 0.0, "exp", children);
 	return out;
 }
 

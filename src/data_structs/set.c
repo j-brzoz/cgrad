@@ -3,13 +3,13 @@
 #include <stdlib.h>
 
 // make a set
-set_p make_set_p() {
+set_p make_set_p(const size_t size, const size_t* elements) {
 	set_p s = malloc(sizeof(*s));
 	if (s == NULL) {
         	fprintf(stderr, "Failed to allocate memory for set.");
         	exit(EXIT_FAILURE);
     	}
-	s->size = 2;
+	s->size = size;
 	s->num_of_elements = 0;
 	s->elements = malloc(sizeof(size_t) * s->size);
 	if (s->elements == NULL) {
@@ -17,6 +17,12 @@ set_p make_set_p() {
         	free(s);  
 		exit(EXIT_FAILURE);
     	}
+
+	if (elements) {
+		for(size_t i = 0; i < size; i++) {
+			add_2_set(s, elements[i]);
+		}
+	}
 	return s;
 }
 

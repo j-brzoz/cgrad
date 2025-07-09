@@ -10,7 +10,7 @@ typedef struct set {
 } set_t, *set_p;
 
 // make a set
-set_p make_set_p();
+set_p make_set_p(const size_t size, const size_t* elements);
 // add an element to the set
 size_t add_2_set(set_p s, const size_t val);
 // check if element is already in the set 
