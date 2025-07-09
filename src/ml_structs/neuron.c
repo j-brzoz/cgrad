@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 // make a neuron
-neuron_p make_neuron(size_t num_of_inputs) {
+neuron_p make_neuron(const size_t num_of_inputs) {
 	double random = 0.0;
 	value_p* parameters = malloc(sizeof(*parameters) * (num_of_inputs+1));
 	if(parameters == NULL) {
@@ -29,7 +29,7 @@ neuron_p make_neuron(size_t num_of_inputs) {
 }
 
 // call a neuron (inputs are doubles)
-value_p call_double_neuron(neuron_p n, double* inputs) {
+value_p call_double_neuron(const neuron_p n, const double* inputs) {
 	value_p out = make_value(0.0, 0.0, NULL, NULL);
 	for(size_t i = 0; i < n->num_of_inputs; i++) {
 		value_p input = make_value(inputs[i], 0.0, NULL, NULL);
@@ -42,7 +42,7 @@ value_p call_double_neuron(neuron_p n, double* inputs) {
 }
 
 // call a neuron (inputs are value_ps)
-value_p call_value_neuron(neuron_p n, value_p* inputs) {
+value_p call_value_neuron(const neuron_p n, const value_p* inputs) {
 	value_p out = make_value(0.0, 0.0, NULL, NULL);
 	for(size_t i = 0; i < n->num_of_inputs; i++) {
 		value_p mul = mul_value(n->parameters[i], inputs[i]);
@@ -54,7 +54,7 @@ value_p call_value_neuron(neuron_p n, value_p* inputs) {
 }
 
 // free memory that had been allocated for the layer
-void free_neuron(neuron_p n) {
+void free_neuron(const neuron_p n) {
 	if(n != NULL) {
 		if(n->parameters != NULL) {
 			free(n->parameters);

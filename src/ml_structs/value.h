@@ -21,26 +21,26 @@ int value_system_init();
 // clean up the global value system
 void value_system_cleanup();
 // make a value
-value_p make_value(double data, double gradient, char* operation, set_p children);
+value_p make_value(double data, double gradient, const char* operation, set_p children);
 // print value's data
-void print_value(value_p val);
+void print_value(const value_p val);
 // add two values
-value_p add_value(value_p val1, value_p val2);
+value_p add_value(const value_p val1, const value_p val2);
 // multiply two values
-value_p mul_value(value_p val1, value_p val2);
+value_p mul_value(const value_p val1, const value_p val2);
 // raise value to the power
-value_p pow_value(value_p val, double power);
+value_p pow_value(const value_p val, double power);
 // divide values
-value_p div_value(value_p val1, value_p val2);
+value_p div_value(const value_p val1, const value_p val2);
 // nagate value
-value_p neg_value(value_p val);
+value_p neg_value(const value_p val);
 // substract values
-value_p sub_value(value_p val1, value_p val2);
+value_p sub_value(const value_p val1, const value_p val2);
 // perform tanh(value)
-value_p tanh_value(value_p val);
+value_p tanh_value(const value_p val);
 // perform e**value
-value_p exp_value(value_p val);
+value_p exp_value(const value_p val);
 // free memory that had been allocated for the value
-void free_value(value_p val);
+void free_value(const value_p val);
 
 #endif

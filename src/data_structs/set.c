@@ -21,7 +21,7 @@ set_p make_set_p() {
 }
 
 // add an element to the set
-size_t add_2_set(set_p s, size_t val) {
+size_t add_2_set(set_p s, const size_t val) {
 	if(check_if_in_set(s, val) == 1) {
 		return 0;
 	} else {
@@ -35,7 +35,7 @@ size_t add_2_set(set_p s, size_t val) {
 }
 
 // check if element is already in the set
-size_t check_if_in_set(set_p s, size_t val) {
+size_t check_if_in_set(const set_p s, const size_t val) {
 	for(size_t i = 0; i < s->num_of_elements; i++) {
 		if(s->elements[i] == val) {
 			return 1;
@@ -60,7 +60,7 @@ void increase_set(set_p s) {
 }
 
 // free memory that had been allocated for the set
-void free_set(set_p s) {
+void free_set(const set_p s) {
 	if(s != NULL) {
 		if(s->elements != NULL) { 
 			free(s->elements);

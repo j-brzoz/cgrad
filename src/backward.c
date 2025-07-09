@@ -9,7 +9,7 @@
 extern val_array_p global_array;
 
 // sorts all values in reverse topological order for backward pass
-void reverse_topological_sort(value_p node, set_p visited, set_p rev_topo_ord) {
+void reverse_topological_sort(const value_p node, set_p visited, set_p rev_topo_ord) {
 	if(node != NULL && check_if_in_set(visited, node->id) == 0) {
 		add_2_set(visited, node->id);
 		if(node->children != NULL) {
@@ -24,7 +24,7 @@ void reverse_topological_sort(value_p node, set_p visited, set_p rev_topo_ord) {
 }
 
 // derivative for addition
-void backward_add(value_p val) {
+void backward_add(const value_p val) {
 	if(val->children->num_of_elements == 2) { // a + b
 		global_array->elements[val->children->elements[0]]->gradient += val->gradient;
 		global_array->elements[val->children->elements[1]]->gradient += val->gradient;
@@ -37,7 +37,7 @@ void backward_add(value_p val) {
 }
 
 // derivative for multiplication
-void backward_mul(value_p val) {
+void backward_mul(const value_p val) {
 	if(val->children->num_of_elements == 2) { // a * b
 		global_array->elements[val->children->elements[0]]->gradient += global_array->elements[val->children->elements[1]]->data * val->gradient;
 		global_array->elements[val->children->elements[1]]->gradient += global_array->elements[val->children->elements[0]]->data * val->gradient;
@@ -50,7 +50,7 @@ void backward_mul(value_p val) {
 }
 
 // derivative for power operation
-void backward_pow(value_p val) { 
+void backward_pow(const value_p val) { 
 	if(val->children->num_of_elements == 2) { // a**b
 		global_array->elements[val->children->elements[0]]->gradient += global_array->elements[val->children->elements[1]]->data * pow(global_array->elements[val->children->elements[0]]->data, global_array->elements[val->children->elements[1]]->data - 1.0) * val->gradient;
 	} else {
@@ -60,7 +60,7 @@ void backward_pow(value_p val) {
 }
 
 // derivative for tanh operation
-void backward_tanh(value_p val) {
+void backward_tanh(const value_p val) {
 	if(val->children->num_of_elements == 1) { // tanh(a)
 		global_array->elements[val->children->elements[0]]->gradient += (1.0 - pow(val->data, 2)) * val->gradient;
 	} else {
@@ -70,7 +70,7 @@ void backward_tanh(value_p val) {
 }
 
 // derivative for exp operation
-void backward_exp(value_p val) {
+void backward_exp(const value_p val) {
 	if(val->children->num_of_elements == 1) { //e**a
 		global_array->elements[val->children->elements[0]]->gradient += val->data * val->gradient;
 	} else {

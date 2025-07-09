@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 // read data from external file
-output_p read_output(FILE *f) {
+output_p read_output(FILE * const f) {
 	output_p out = malloc(sizeof(*out));
 	if(out == NULL) {
 		fprintf(stderr, "Failed to allocate memory for output");
@@ -39,7 +39,7 @@ output_p read_output(FILE *f) {
 }
 
 // free memory that had been allocated for the output
-void free_output(output_p out) {
+void free_output(const output_p out) {
 	if(out != NULL) {
 		if(out->data != NULL) {
 			free(out->data);

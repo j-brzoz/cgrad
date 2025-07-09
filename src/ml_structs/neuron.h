@@ -10,12 +10,12 @@ typedef struct neuron {
 } neuron_t, *neuron_p;
 
 // make a neuron
-neuron_p make_neuron(size_t num_of_inputs);
+neuron_p make_neuron(const size_t num_of_inputs);
 // call a neuron (inputs are doubles)
-value_p call_double_neuron(neuron_p n, double* inputs);
+value_p call_double_neuron(const neuron_p n, const double* inputs);
 // call a neuron (inputs are value_ps)
-value_p call_value_neuron(neuron_p n, value_p* inputs);
+value_p call_value_neuron(const neuron_p n, const value_p* inputs);
 // free memory that had been allocated for the layer
-void free_neuron(neuron_p n);
+void free_neuron(const neuron_p n);
 
 #endif

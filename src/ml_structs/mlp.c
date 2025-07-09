@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 // make the mlp
-mlp_p make_mlp(size_t num_of_layers, size_t num_of_inputs, size_t *neurons_per_layer) {
+mlp_p make_mlp(const size_t num_of_layers, const size_t num_of_inputs, size_t *neurons_per_layer) {
 	mlp_p m = malloc(sizeof(*m));
 	if(m == NULL) {
 		fprintf(stderr, "Failed to allocate memory for the mlp.");
@@ -35,7 +35,7 @@ mlp_p make_mlp(size_t num_of_layers, size_t num_of_inputs, size_t *neurons_per_l
 }
 
 // call the mlp
-value_p* call_mlp(mlp_p m, double* inputs) {
+value_p* call_mlp(const mlp_p m, const double* inputs) {
 	value_p* next_inputs = NULL;
 	for(size_t i = 0; i < m->num_of_layers; i++) {
 		if(i == 0) {
@@ -48,7 +48,7 @@ value_p* call_mlp(mlp_p m, double* inputs) {
 }
 
 // train the mlp
-void train_mlp(mlp_p m, size_t iterations, input_p input, output_p output, double learning_rate, size_t is_verbose) {	
+void train_mlp(mlp_p m, const size_t iterations, const input_p input, const output_p output, const double learning_rate, const size_t is_verbose) {	
 	value_p* out_pred = malloc(sizeof(*out_pred) * output->num);
 	if(out_pred == NULL) {
 		fprintf(stderr, "Failed to allocate memory for predictions.");
@@ -97,7 +97,7 @@ void train_mlp(mlp_p m, size_t iterations, input_p input, output_p output, doubl
 }
 
 // free memory that had been allocated for the layer
-void free_mlp(mlp_p m) {
+void free_mlp(const mlp_p m) {
 	if(m != NULL) {
 		if(m->neurons_per_layer != NULL) {
 			free(m->neurons_per_layer);

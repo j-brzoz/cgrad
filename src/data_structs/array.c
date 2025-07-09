@@ -22,7 +22,7 @@ val_array_p make_val_array() {
 }
 
 // add value to the array of values
-void add_2_val_array(val_array_p a, value_p val) {
+void add_2_val_array(val_array_p a, const value_p val) {
 	if (a->size == a->num_of_elements) {
 		increase_val_array(a);
 	}
@@ -47,7 +47,7 @@ void increase_val_array(val_array_p a) {
 }
 
 // free memory that had been allocated for the array of values
-void free_val_array(val_array_p a) {
+void free_val_array(const val_array_p a) {
 	if(a != NULL) {
 		if(a->elements != NULL) {
 			for(size_t i = 0; i < a->num_of_elements; i++) {
