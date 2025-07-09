@@ -128,7 +128,7 @@ value_p exp_value(const value_p val) {
 }
 
 // free memory that had been allocated for the value
-void free_value(const value_p val) {
+void free_value(value_p val) {
 	if(val != NULL) {
 		if(val->children != NULL) {
 			free_set(val->children);

@@ -12,6 +12,6 @@ typedef struct input {
 // read data from external file
 input_p read_input(FILE * const f);
 // free memory that had been allocated for input
-void free_input(const input_p in);
+void free_input(input_p in);
 
 #endif

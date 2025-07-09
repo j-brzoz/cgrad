@@ -21,6 +21,6 @@ value_p* call_mlp(const mlp_p m, const double* inputs);
 // train the mlp
 void train_mlp(mlp_p m, const size_t iterations, const input_p input, const output_p output, const double learning_rate, const size_t is_verbose);
 // free memory that had been allocated for the mlp
-void free_mlp(const mlp_p m);
+void free_mlp(mlp_p m);
 
 #endif

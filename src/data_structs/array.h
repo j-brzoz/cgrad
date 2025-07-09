@@ -19,6 +19,6 @@ void add_2_val_array(val_array_p a, const value_p val);
 // increase the size of the array of values
 void increase_val_array(val_array_p a);
 // free memory that had been allocated for the array of values
-void free_val_array(const val_array_p a);
+void free_val_array(val_array_p a);
 
 #endif

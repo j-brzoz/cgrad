@@ -97,7 +97,7 @@ void train_mlp(mlp_p m, const size_t iterations, const input_p input, const outp
 }
 
 // free memory that had been allocated for the layer
-void free_mlp(const mlp_p m) {
+void free_mlp(mlp_p m) {
 	if(m != NULL) {
 		if(m->neurons_per_layer != NULL) {
 			free(m->neurons_per_layer);

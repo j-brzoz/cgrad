@@ -18,6 +18,6 @@ size_t check_if_in_set(const set_p s, const size_t val);
 // double the size of set
 void increase_set(set_p s);
 // free memory that had been allocated for the set
-void free_set(const set_p s);
+void free_set(set_p s);
 
 #endif

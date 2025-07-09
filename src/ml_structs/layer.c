@@ -54,7 +54,7 @@ value_p* call_next_layer(const layer_p l, value_p* inputs) {
 }
 
 // free memory that had been allocated for the layer
-void free_layer(const layer_p l) {
+void free_layer(layer_p l) {
 	if(l != NULL ) {
 		if(l->neurons != NULL) {	
 			for(size_t i = 0; i < l->num_of_neurons; i++) {

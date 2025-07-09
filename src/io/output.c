@@ -39,7 +39,7 @@ output_p read_output(FILE * const f) {
 }
 
 // free memory that had been allocated for the output
-void free_output(const output_p out) {
+void free_output(output_p out) {
 	if(out != NULL) {
 		if(out->data != NULL) {
 			free(out->data);

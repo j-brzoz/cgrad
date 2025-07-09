@@ -54,7 +54,7 @@ input_p read_input(FILE * const f) {
 }
 
 // free memory that had been allocated for input
-void free_input(const input_p in) {
+void free_input(input_p in) {
 	if(in != NULL) {
 		if(in->data != NULL) {
 			for(size_t i = 0; i < in->rows; i++) {

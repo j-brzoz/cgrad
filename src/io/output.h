@@ -12,6 +12,6 @@ typedef struct output {
 // read data from external file
 output_p read_output(FILE * const f);
 // free memory that had been allocated for the output
-void free_output(const output_p out);
+void free_output(output_p out);
 
 #endif

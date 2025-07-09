@@ -54,7 +54,7 @@ value_p call_value_neuron(const neuron_p n, const value_p* inputs) {
 }
 
 // free memory that had been allocated for the layer
-void free_neuron(const neuron_p n) {
+void free_neuron(neuron_p n) {
 	if(n != NULL) {
 		if(n->parameters != NULL) {
 			free(n->parameters);

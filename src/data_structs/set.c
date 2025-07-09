@@ -66,7 +66,7 @@ void increase_set(set_p s) {
 }
 
 // free memory that had been allocated for the set
-void free_set(const set_p s) {
+void free_set(set_p s) {
 	if(s != NULL) {
 		if(s->elements != NULL) { 
 			free(s->elements);

@@ -17,6 +17,6 @@ value_p* call_first_layer(const layer_p l, const double* inputs);
 // call next layers in mlp (input are value_ps)
 value_p* call_next_layer(const layer_p l, value_p* inputs);
 // free memory that had been allocated for the layer
-void free_layer(const layer_p l);
+void free_layer(layer_p l);
 
 #endif

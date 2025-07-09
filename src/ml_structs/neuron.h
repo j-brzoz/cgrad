@@ -16,6 +16,6 @@ value_p call_double_neuron(const neuron_p n, const double* inputs);
 // call a neuron (inputs are value_ps)
 value_p call_value_neuron(const neuron_p n, const value_p* inputs);
 // free memory that had been allocated for the layer
-void free_neuron(const neuron_p n);
+void free_neuron(neuron_p n);
 
 #endif
