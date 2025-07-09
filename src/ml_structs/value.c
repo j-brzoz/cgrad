@@ -87,6 +87,7 @@ value_p add_value(const value_p val1, const value_p val2) {
 	add_2_set(children, val1->id);
 	add_2_set(children, val2->id);
 	value_p out = make_value(val1->data + val2->data, 0.0, operation, children);
+	free(operation);
 	return out;
 }
 
@@ -102,6 +103,7 @@ value_p mul_value(const value_p val1, const value_p val2) {
 	add_2_set(children, val1->id);
 	add_2_set(children, val2->id);
 	value_p out = make_value(val1->data * val2->data, 0.0, operation, children);
+	free(operation);
 	return out;
 }
 
@@ -118,6 +120,7 @@ value_p pow_value(const value_p val, double power) { // only supports float powe
 	add_2_set(children, val->id);
 	add_2_set(children, power_val->id);
 	value_p out = make_value(pow(val->data, power), 0.0, operation, children);
+	free(operation);
 	return out;
 }
 
@@ -148,6 +151,7 @@ value_p tanh_value(const value_p val) {
 	set_p children = make_set_p();
 	add_2_set(children, val->id);
 	value_p out = make_value((exp(2 * val->data) - 1) / (exp(2 * val->data) + 1), 0.0, operation, children);
+	free(operation);
 	return out;
 }
 
@@ -162,6 +166,7 @@ value_p exp_value(const value_p val) {
 	set_p children = make_set_p();
 	add_2_set(children, val->id);
 	value_p out = make_value((exp(val->data)), 0.0, operation, children);
+	free(operation);
 	return out;
 }
 
