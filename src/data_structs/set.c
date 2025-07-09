@@ -53,16 +53,12 @@ size_t check_if_in_set(const set_p s, const size_t val) {
 // double the size of set
 void increase_set(set_p s) {
 	s->size *= 2;
-	size_t* new_set = malloc(sizeof(size_t) * s->size);
-	if (new_set == NULL) {
-        	fprintf(stderr, "Failed to allocate memory for increased set.");
-        	exit(EXIT_FAILURE);
-    	}
-	for(size_t i = 0; i < s->num_of_elements; i++) {
-		new_set[i] = s->elements[i];
-	}
-	free(s->elements);
-	s->elements = new_set;	
+    size_t* new_set = realloc(s->elements, sizeof(size_t) * s->size);
+    if (new_set == NULL) {
+        fprintf(stderr, "Failed to reallocate memory for increased set.\n");
+        exit(EXIT_FAILURE);
+    }
+    s->elements = new_set;
 }
 
 // free memory that had been allocated for the set
