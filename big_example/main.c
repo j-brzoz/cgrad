@@ -25,17 +25,17 @@ int main() {
 	mlp_p m = make_mlp(3, 3, n);
 	
 	// reading in input
-	FILE *input_file = fopen("example/input.txt", "r");
+	FILE *input_file = fopen("example_copy/input.txt", "r");
 	input_p in = read_input(input_file);
 	fclose(input_file);
 
 	// reading desired output
-	FILE *output_file = fopen("example/output.txt", "r");
+	FILE *output_file = fopen("example_copy/output.txt", "r");
 	output_p out = read_output(output_file);
 	fclose(output_file);
 
 	// training
-	train_mlp(m, 50, in, out, 0.1, 1);
+	train_mlp(m, 50, in, out, 0.00001, 100, 1);
 	
 	// freeing memory
 	free_input(in);

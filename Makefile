@@ -1,13 +1,9 @@
-# all:
-# 	gcc -Wall -o bin/main.out src/*.c src/data_structs/*.c src/ml_structs/*.c src/io/*.c example/*.c -lm
-
-
 CC = gcc
 CFLAGS = -Wall -Wextra -Wpedantic -Werror -O3 -MMD -MP
 INCLUDE_DIRS = -Isrc -Isrc/data_structs -Isrc/io -Isrc/ml_structs
 LDFLAGS = -lm
 SRC_ROOT = src
-EXAMPLE_DIR = example
+EXAMPLE_DIR = small_example
 BUILD_DIR = build
 BIN_DIR = bin
 EXECUTABLE = $(BIN_DIR)/main.out
