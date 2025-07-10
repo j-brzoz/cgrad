@@ -48,51 +48,69 @@ value_p* call_mlp(const mlp_p m, const double* inputs) {
 }
 
 // train the mlp
-void train_mlp(mlp_p m, const size_t iterations, const input_p input, const output_p output, const double learning_rate, const size_t is_verbose) {	
-	value_p* out_pred = malloc(sizeof(*out_pred) * output->num);
+void train_mlp(mlp_p m, const size_t epochs, const input_p input, const output_p output, const double learning_rate, const size_t batch_size, const size_t is_verbose) {	
+	value_p* out_pred = malloc(sizeof(*out_pred) * batch_size);
 	if(out_pred == NULL) {
 		fprintf(stderr, "Failed to allocate memory for predictions.");
 		exit(EXIT_FAILURE);
 	}
+
 	value_p* tmp;
 	value_p loss;
 	
-	for(size_t a = 0; a < iterations; a++) {	
-		// forward pass
-		for(size_t i = 0; i < output->num; i++) {
-			tmp = call_mlp(m, input->data[i]);
-			out_pred[i] = tmp[0];
-			free(tmp);
-		}
-		
-		loss = mean_sqr_error(out_pred, output->data, output->num);
-	
-		// backward
-		for(size_t i = 0; i < m->num_of_layers; i++) {
-			for(size_t j = 0; j < m->layers[i]->num_of_neurons; j++) {
-				for(size_t k = 0; k < m->layers[i]->neurons[j]->num_of_inputs+1; k++) {
-					m->layers[i]->neurons[j]->parameters[k]->gradient = 0.0;
-				}
-			}
-		}
-		backward(loss);
+	for(size_t a = 0; a < epochs; a++) {	
+        size_t iteration = 0;
+        size_t start_sample;
+        size_t end_sample;
+        size_t current_batch_size;
+		double total_epoch_loss = 0.0;
+        size_t num_batches_in_epoch = 0;
+		while (1) {
+			start_sample = iteration * batch_size;
+			if (start_sample >= output->num) {
+                break;
+            }
+			end_sample = start_sample + batch_size;
+            if (end_sample > output->num) {
+                end_sample = output->num;
+            }
+			current_batch_size = end_sample - start_sample;
 
-		// update
-		for(size_t i = 0; i < m->num_of_layers; i++) {
-			for(size_t j = 0; j < m->layers[i]->num_of_neurons; j++) {
-				for(size_t k = 0; k < m->layers[i]->neurons[j]->num_of_inputs+1; k++) {
-					m->layers[i]->neurons[j]->parameters[k]->data += -learning_rate * m->layers[i]->neurons[j]->parameters[k]->gradient;
+			// forward pass
+			for(size_t i = start_sample; i < end_sample; i++) {
+				tmp = call_mlp(m, input->data[i]);
+				out_pred[i-start_sample] = tmp[0];
+				free(tmp);
+			}
+			loss = mean_sqr_error(out_pred, (output->data)+start_sample, current_batch_size);
+            total_epoch_loss += loss->data;
+            num_batches_in_epoch++;
+
+			// backward
+			for(size_t i = 0; i < m->num_of_layers; i++) {
+				for(size_t j = 0; j < m->layers[i]->num_of_neurons; j++) {
+					for(size_t k = 0; k < m->layers[i]->neurons[j]->num_of_inputs+1; k++) {
+						m->layers[i]->neurons[j]->parameters[k]->gradient = 0.0;
+					}
 				}
 			}
+			backward(loss);
+	
+			// update
+			for(size_t i = 0; i < m->num_of_layers; i++) {
+				for(size_t j = 0; j < m->layers[i]->num_of_neurons; j++) {
+					for(size_t k = 0; k < m->layers[i]->neurons[j]->num_of_inputs+1; k++) {
+						m->layers[i]->neurons[j]->parameters[k]->data += -learning_rate * m->layers[i]->neurons[j]->parameters[k]->gradient;
+					}
+				}
+			}
+			
+			iteration++;
 		}
-		
 		if(is_verbose != 0) {
-			printf("Iteration: %ld Loss: ", a+1);
-			print_value(loss);
+			printf("Epoch: %ld Loss: %f\n", a+1, total_epoch_loss);
 		}
-
 	}
-	
 	free(out_pred);
 }
 
