@@ -25,12 +25,12 @@ int main() {
 	mlp_p m = make_mlp(3, 3, n);
 	
 	// reading in input
-	FILE *input_file = fopen("example_copy/input.txt", "r");
+	FILE *input_file = fopen("big_example/input.txt", "r");
 	input_p in = read_input(input_file);
 	fclose(input_file);
 
 	// reading desired output
-	FILE *output_file = fopen("example_copy/output.txt", "r");
+	FILE *output_file = fopen("big_example/output.txt", "r");
 	output_p out = read_output(output_file);
 	fclose(output_file);
 
