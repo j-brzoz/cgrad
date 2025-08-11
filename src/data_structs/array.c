@@ -40,6 +40,14 @@ void increase_val_array(val_array_p a) {
     a->elements = new_array;
 }
 
+// delete array[start_id:]
+void delete_elems_from_val_array(val_array_p a, size_t start_id) {
+	for(size_t array_id = start_id; array_id < a->num_of_elements; array_id++) {
+		free_value(a->elements[array_id]);
+	}
+	a->num_of_elements = start_id;
+}
+
 // free memory that had been allocated for the array of values
 void free_val_array(val_array_p a) {
 	if(a != NULL) {

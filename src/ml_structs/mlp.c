@@ -65,6 +65,8 @@ void train_mlp(mlp_p m, const size_t epochs, const input_p input, const output_p
         size_t current_batch_size;
 		double total_epoch_loss = 0.0;
         size_t num_batches_in_epoch = 0;
+		
+		size_t global_id_state_before_batch_pass = *id;
 		while (1) {
 			start_sample = iteration * batch_size;
 			if (start_sample >= output->num) {
@@ -106,6 +108,10 @@ void train_mlp(mlp_p m, const size_t epochs, const input_p input, const output_p
 			}
 			
 			iteration++;
+			
+			// danger zone - messing with globals
+			delete_elems_from_val_array(global_array, global_id_state_before_batch_pass);
+			*id = global_id_state_before_batch_pass;
 		}
 		if(is_verbose != 0) {
 			printf("Epoch: %ld Loss: %f\n", a+1, total_epoch_loss);

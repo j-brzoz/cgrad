@@ -18,6 +18,8 @@ val_array_p make_val_array();
 void add_2_val_array(val_array_p a, const value_p val);
 // increase the size of the array of values
 void increase_val_array(val_array_p a);
+// delete array[start_id:]
+void delete_elems_from_val_array(val_array_p a, size_t start_id);
 // free memory that had been allocated for the array of values
 void free_val_array(val_array_p a);
 
