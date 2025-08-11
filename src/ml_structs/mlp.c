@@ -64,17 +64,16 @@ void train_mlp(mlp_p m, const size_t epochs, const input_p input, const output_p
         size_t end_sample;
         size_t current_batch_size;
 		double total_epoch_loss = 0.0;
-        size_t num_batches_in_epoch = 0;
 		
 		size_t global_id_state_before_batch_pass = *id;
 		while (1) {
 			start_sample = iteration * batch_size;
-			if (start_sample >= output->num) {
+			if (start_sample >= output->rows) {
                 break;
             }
 			end_sample = start_sample + batch_size;
-            if (end_sample > output->num) {
-                end_sample = output->num;
+            if (end_sample > output->rows) {
+                end_sample = output->rows;
             }
 			current_batch_size = end_sample - start_sample;
 
@@ -86,7 +85,6 @@ void train_mlp(mlp_p m, const size_t epochs, const input_p input, const output_p
 			}
 			loss = mean_sqr_error(out_pred, (output->data)+start_sample, current_batch_size);
             total_epoch_loss += loss->data;
-            num_batches_in_epoch++;
 
 			// backward
 			for(size_t i = 0; i < m->num_of_layers; i++) {
@@ -118,6 +116,38 @@ void train_mlp(mlp_p m, const size_t epochs, const input_p input, const output_p
 		}
 	}
 	free(out_pred);
+}
+
+// evaluate the mlp
+double evaluate_mlp(mlp_p m, const input_p input, const output_p output, const char* results_filename) {
+	FILE *results_file;
+	if (results_filename) {
+		results_file = fopen(results_filename, "w");
+	}
+	
+	value_p* out_pred = malloc(sizeof(*out_pred) * input->rows);
+	if(out_pred == NULL) {
+		fprintf(stderr, "Failed to allocate memory for predictions.");
+		exit(EXIT_FAILURE);
+	}
+	
+	value_p* tmp;
+	value_p loss;
+	for(size_t i = 0; i < input->rows; i++) {
+		tmp = call_mlp(m, input->data[i]);
+		out_pred[i] = tmp[0];
+		if (results_filename) {
+			fprintf(results_file, "%f\n", tmp[0]->data * output->std + output->mean);
+		}
+		free(tmp);
+	}
+	loss = mean_sqr_error(out_pred, output->data, input->rows);
+	
+	free(out_pred);
+	if (results_filename) {
+		fclose(results_file);
+	}
+	return loss->data;
 }
 
 // free memory that had been allocated for the layer
