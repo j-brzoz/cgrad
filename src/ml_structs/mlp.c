@@ -114,7 +114,7 @@ void train_mlp(mlp_p m, const size_t epochs, const input_p input, const output_p
 			*id = global_id_state_before_batch_pass;
 		}
 		if(is_verbose != 0) {
-			printf("Epoch: %ld Loss: %f\n", a+1, total_epoch_loss);
+			printf("Epoch: %ld Loss: %f\n", a+1, total_epoch_loss / iteration);
 		}
 	}
 	free(out_pred);
