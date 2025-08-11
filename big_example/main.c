@@ -28,15 +28,23 @@ int main() {
 	FILE *input_file = fopen("big_example/input.txt", "r");
 	input_p in = read_input(input_file);
 	fclose(input_file);
+	get_stats_input(in);
+	scale_input(in);
 
 	// reading desired output
 	FILE *output_file = fopen("big_example/output.txt", "r");
 	output_p out = read_output(output_file);
 	fclose(output_file);
+	get_stats_output(out);
+	scale_output(out);
 
 	// training
-	train_mlp(m, 50, in, out, 0.00001, 100, 1);
-	
+	train_mlp(m, 100, in, out, 0.0001, 100, 1);
+
+	// get results
+	double final_loss = evaluate_mlp(m, in, out, "results.txt");
+	printf("Final loss: %f\n", final_loss);
+
 	// freeing memory
 	free_input(in);
 	free_output(out);
