@@ -3,6 +3,7 @@
 
 #include "value.h"
 #include <stdio.h>
+#include <math.h>
 
 typedef struct neuron {
 	size_t num_of_inputs; // number of parameters = num_of_inputs + 1
@@ -10,7 +11,7 @@ typedef struct neuron {
 } neuron_t, *neuron_p;
 
 // make a neuron
-neuron_p make_neuron(const size_t num_of_inputs);
+neuron_p make_neuron(const size_t num_of_inputs, const size_t num_of_neurons);
 // call a neuron (inputs are doubles)
 value_p call_double_neuron(const neuron_p n, const double* inputs);
 // call a neuron (inputs are value_ps)

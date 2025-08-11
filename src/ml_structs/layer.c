@@ -19,7 +19,7 @@ layer_p make_layer(const size_t num_of_inputs, const size_t num_of_neurons) {
                 exit(EXIT_FAILURE);
 	}
 	for(size_t i = 0; i < num_of_neurons; i++) {
-		out->neurons[i] = make_neuron(num_of_inputs);
+		out->neurons[i] = make_neuron(num_of_inputs, num_of_neurons);
 	}
 	return out;
 }

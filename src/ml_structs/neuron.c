@@ -4,8 +4,10 @@
 #include <stdlib.h>
 
 // make a neuron
-neuron_p make_neuron(const size_t num_of_inputs) {
+neuron_p make_neuron(const size_t num_of_inputs, const size_t num_of_neurons) {
 	double random = 0.0;
+	double limit = sqrt(6.0 / (num_of_inputs + num_of_neurons)); // Xavier limit
+
 	value_p* parameters = malloc(sizeof(*parameters) * (num_of_inputs+1));
 	if(parameters == NULL) {
 		fprintf(stderr, "Failed to allocate the memory for neuron's parameters.");
@@ -13,7 +15,7 @@ neuron_p make_neuron(const size_t num_of_inputs) {
 	}
 
 	for(size_t i = 0; i < num_of_inputs+1; i++) {
-		random = ((double)rand() / RAND_MAX) * 2.0 - 1.0; // num between -1.0 and 1.0
+		random = ((double)rand() / RAND_MAX) * 2.0 * limit - limit; // Xavier init
 		parameters[i] = make_value(random, 0.0, NULL, NULL); 
 	}
 	neuron_p out = malloc(sizeof(*out));
