@@ -50,7 +50,7 @@ value_p* call_mlp(const mlp_p m, const double* inputs) {
 }
 
 // train the mlp
-void train_mlp(mlp_p m, const size_t epochs, const input_p input, const output_p output, const double learning_rate, const size_t batch_size, const size_t is_verbose) {	
+void train_mlp(mlp_p m, const size_t epochs, const input_p input, const output_p output, const double learning_rate, const size_t batch_size, value_p (*loss_function)(const value_p*, const value_p*, const size_t), const size_t is_verbose) {	
 	value_p* out_pred = malloc(sizeof(*out_pred) * batch_size);
 	if(out_pred == NULL) {
 		fprintf(stderr, "Failed to allocate memory for predictions.");
@@ -85,7 +85,7 @@ void train_mlp(mlp_p m, const size_t epochs, const input_p input, const output_p
 				out_pred[i-start_sample] = tmp[0];
 				free(tmp);
 			}
-			loss = mean_sqr_error(out_pred, (output->data)+start_sample, current_batch_size);
+			loss = loss_function(out_pred, (output->data)+start_sample, current_batch_size);
             total_epoch_loss += loss->data;
 
 			// backward
@@ -121,7 +121,7 @@ void train_mlp(mlp_p m, const size_t epochs, const input_p input, const output_p
 }
 
 // evaluate the mlp
-double evaluate_mlp(mlp_p m, const input_p input, const output_p output, const char* results_filename) {
+double evaluate_mlp(mlp_p m, const input_p input, const output_p output, value_p (*loss_function)(const value_p*, const value_p*, const size_t), const char* results_filename) {
 	FILE *results_file;
 	if (results_filename) {
 		results_file = fopen(results_filename, "w");
@@ -143,7 +143,7 @@ double evaluate_mlp(mlp_p m, const input_p input, const output_p output, const c
 		}
 		free(tmp);
 	}
-	loss = mean_sqr_error(out_pred, output->data, input->rows);
+	loss = loss_function(out_pred, output->data, input->rows);
 	
 	free(out_pred);
 	if (results_filename) {

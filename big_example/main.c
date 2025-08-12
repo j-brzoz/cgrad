@@ -39,10 +39,10 @@ int main() {
 	scale_output(out);
 
 	// training
-	train_mlp(m, 20, in, out, 0.1, 100, 1);
+	train_mlp(m, 20, in, out, 0.1, 100, mean_sqr_error, 1);
 
 	// get results
-	double final_loss = evaluate_mlp(m, in, out, "results.txt");
+	double final_loss = evaluate_mlp(m, in, out, mean_sqr_error, "results.txt");
 	printf("Final loss: %f\n", final_loss);
 
 	// freeing memory

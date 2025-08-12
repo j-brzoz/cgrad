@@ -19,9 +19,9 @@ mlp_p make_mlp(const size_t num_of_layers, const size_t num_of_inputs, size_t *n
 // call the mlp
 value_p* call_mlp(const mlp_p m, const double* inputs);
 // train the mlp
-void train_mlp(mlp_p m, const size_t epochs, const input_p input, const output_p output, const double learning_rate, const size_t batch_size, const size_t is_verbose);
+void train_mlp(mlp_p m, const size_t epochs, const input_p input, const output_p output, const double learning_rate, const size_t batch_size, value_p (*loss_function)(const value_p*, const value_p*, const size_t), const size_t is_verbose);
 // evaluate the mlp
-double evaluate_mlp(mlp_p m, const input_p input, const output_p output, const char* results_filename);
+double evaluate_mlp(mlp_p m, const input_p input, const output_p output, value_p (*loss_function)(const value_p*, const value_p*, const size_t), const char* results_filename);
 // free memory that had been allocated for the mlp
 void free_mlp(mlp_p m);
 
