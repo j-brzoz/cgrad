@@ -40,8 +40,10 @@ value_p* call_mlp(const mlp_p m, const double* inputs) {
 	for(size_t i = 0; i < m->num_of_layers; i++) {
 		if(i == 0) {
 			next_inputs = call_first_layer(m->layers[i], inputs);
-		} else {
-			next_inputs = call_next_layer(m->layers[i], next_inputs);
+		} else if (i == m->num_of_layers-1) {
+			next_inputs = call_next_layer(m->layers[i], next_inputs, 1);
+		} else  {
+			next_inputs = call_next_layer(m->layers[i], next_inputs, 0);
 		}
 	}
 	return next_inputs;

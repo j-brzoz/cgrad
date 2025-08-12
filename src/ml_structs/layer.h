@@ -15,7 +15,7 @@ layer_p make_layer(const size_t num_of_inputs, const size_t num_of_neurons);
 // call first layer in mlp (inputs are doubles)
 value_p* call_first_layer(const layer_p l, const double* inputs);
 // call next layers in mlp (input are value_ps)
-value_p* call_next_layer(const layer_p l, value_p* inputs);
+value_p* call_next_layer(const layer_p l, value_p* inputs, const size_t is_last_layer);
 // free memory that had been allocated for the layer
 void free_layer(layer_p l);
 

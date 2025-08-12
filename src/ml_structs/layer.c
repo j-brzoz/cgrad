@@ -38,20 +38,22 @@ value_p* call_first_layer(const layer_p l, const double* inputs) {
 }
 
 // call next layers in mlp (input are value_ps)
-value_p* call_next_layer(const layer_p l, value_p* inputs) {
+value_p* call_next_layer(const layer_p l, value_p* inputs, const size_t is_last_layer) {
 	value_p* out = malloc(sizeof(*out) * l->num_of_neurons);
 	if(out == NULL) {
                 fprintf(stderr, "Failed to allocate memory for output from next layers.");
                 exit(EXIT_FAILURE);
         }
 	for(size_t i = 0; i < l->num_of_neurons; i++) {
-		out[i] = call_value_neuron(l->neurons[i], inputs);
+		out[i] = call_value_neuron(l->neurons[i], inputs, is_last_layer);
 	}
 	if(inputs != NULL) {
 		free(inputs);
 	}
 	return out;
 }
+
+
 
 // free memory that had been allocated for the layer
 void free_layer(layer_p l) {

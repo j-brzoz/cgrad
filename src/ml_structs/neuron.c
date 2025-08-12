@@ -44,14 +44,16 @@ value_p call_double_neuron(const neuron_p n, const double* inputs) {
 }
 
 // call a neuron (inputs are value_ps)
-value_p call_value_neuron(const neuron_p n, const value_p* inputs) {
+value_p call_value_neuron(const neuron_p n, const value_p* inputs, const size_t is_last_layer) {
 	value_p out = make_value(0.0, 0.0, NULL, NULL);
 	for(size_t i = 0; i < n->num_of_inputs; i++) {
 		value_p mul = mul_value(n->parameters[i], inputs[i]);
 		out = add_value(out, mul);
 	}
 	out = add_value(out, n->parameters[n->num_of_inputs]);
-	out = tanh_value(out);
+	if (is_last_layer == 0) {
+		out = tanh_value(out);
+	}
 	return out;
 }
 
