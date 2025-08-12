@@ -19,8 +19,8 @@ int main() {
 
 	// mlp structure	
 	size_t* n = malloc(sizeof(size_t) * 3);
-	n[0] = 4;
-	n[1] = 4;
+	n[0] = 8;
+	n[1] = 8;
 	n[2] = 1;
 	mlp_p m = make_mlp(3, 3, n);
 	
@@ -39,7 +39,7 @@ int main() {
 	scale_output(out);
 
 	// training
-	train_mlp(m, 100, in, out, 0.0001, 100, 1);
+	train_mlp(m, 20, in, out, 0.1, 100, 1);
 
 	// get results
 	double final_loss = evaluate_mlp(m, in, out, "results.txt");
